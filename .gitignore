@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+.mypy_cache
+.ipynb_checkpoints
+
+# Distribution / packaging
+dist/
+venv/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# DotEnv configuration
+.env
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Mac OS-specific storage files
+.DS_Store
+
+#service dirs and files
+logs/*
+temp/*
+data/*
+logs/*
+models/*
+
+!.gitkeep
