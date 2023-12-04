@@ -1,6 +1,6 @@
-test-size: 0.3
-batch-size: 4
-img-shape: 32
+test-size: 0.2
+batch-size: 6
+img-shape: 128
 optim: 'SDG'
 learn-rate: 0.001
 epochs: 10
