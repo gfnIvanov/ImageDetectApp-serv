@@ -32,3 +32,4 @@ logs/*
 models/*
 
 !.gitkeep
+!models/model_log.json
