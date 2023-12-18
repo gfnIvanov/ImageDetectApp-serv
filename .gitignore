@@ -12,9 +12,6 @@ eggs/
 *.egg-info/
 *.egg
 
-# DotEnv configuration
-.env
-
 # VS Code
 .vscode/
 

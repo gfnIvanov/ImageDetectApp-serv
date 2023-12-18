@@ -1,12 +1,9 @@
+include .env
+
 .PHONY: start
 
 RUN = poetry run
-MODE = dev
 
 start:
-ifeq ($(MODE), dev)
-	$(RUN) flask run --debug
-else
-	$(RUN) flask run
-endif
-	
+	@echo Server start on ${HOST}:${PORT}
+	$(RUN) start
