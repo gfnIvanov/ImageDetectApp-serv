@@ -1,34 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import yaml
 import logging
-import torchvision.transforms as transforms
-from torchvision import datasets
-from app import app
-from pathlib import Path
+from app import app, data
 
 
 app_log = logging.getLogger(__name__)
-
-with open(Path.joinpath(app.config['BASE_DIR'], 'params', 'process_model.yml')) as f:
-    params = yaml.safe_load(f)
-
-translate = {
-    "cane": "собака", 
-    "cavallo": "лошадь", 
-    "elefante": "слон", 
-    "farfalla": "бабочка", 
-    "gallina": "курица", 
-    "gatto": "кошка", 
-    "mucca": "корова", 
-    "pecora": "овца", 
-    "scoiattolo": "белка",
-    "ragno": "паук"
-}
-
-classes = list(translate.keys())
-
 
 class Net(nn.Module):
     def __init__(self):
@@ -48,26 +25,36 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 
+def train(params):
+    data_handler = data.Data()
+    dataloaders = data_handler.process()
+    for epoch in range(params["epochs"]):
+        running_loss = 0.0
+        for i, data in enumerate(dataloaders["train_data"], 0):
+            inputs, labels = data
+
+            optimizer.zero_grad()
+
+            outputs = net(inputs)
+            loss = criterion(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+            running_loss += loss.item()
+            if i % 100 == 99:
+                print(f"[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}")
+                running_loss = 0.0
 
 def use():
     try:
         net = Net()
-        net.load_state_dict(torch.load(app.config['MODEL_FILE']))
-        data_transforms = transforms.Compose([
-            transforms.Resize((params['img-shape'], params['img-shape'])),
-            # transforms.RandomResizedCrop(params['img-shape']),
-            transforms.ToTensor(),
-            transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
-        ])
-
-        image_dataset = datasets.ImageFolder(app.config['CHECK_IMG_DIR'], data_transforms)
-        dataloader = torch.utils.data.DataLoader(image_dataset, 
-                                                 batch_size=params['batch-size'],
-                                                 shuffle=True, 
-                                                 num_workers=4)
-        image, _ = next(iter(dataloader))
+        data_handler = data.Data()
+        classes = list(data_handler.translate.keys())
+        net.load_state_dict(torch.load(app.config["MODEL_FILE"]))
+        dataloaders = data_handler.transform_data(app.config["DATA_DIR"], ["for_check"])
+        image, _ = next(iter(dataloaders["for_check"]))
         output = net(image)
         _, predicted = torch.max(output, 1)
-        return translate[classes[predicted[0]]]
+        return data_handler.translate[classes[predicted[0]]]
     except Exception as err:
         app_log.error(err)
