@@ -1,11 +1,20 @@
+import os
+import pickle
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import logging
-from app import app, data
+import traceback
+from flask_socketio import emit
+from dotenv import load_dotenv
+from websockets.sync.client import connect
+from app import app, data as data_module
 
+
+load_dotenv()
 
 app_log = logging.getLogger(__name__)
+
 
 class Net(nn.Module):
     def __init__(self):
@@ -26,29 +35,48 @@ class Net(nn.Module):
         return x
 
 def train(params):
-    data_handler = data.Data()
-    dataloaders = data_handler.process()
-    for epoch in range(params["epochs"]):
-        running_loss = 0.0
-        for i, data in enumerate(dataloaders["train_data"], 0):
-            inputs, labels = data
+    try:
+        data_handler = data_module.Data(params)
+        dataloaders = data_handler.process()
+        criterion = nn.CrossEntropyLoss()
 
-            optimizer.zero_grad()
-
-            outputs = net(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-
-            running_loss += loss.item()
-            if i % 100 == 99:
-                print(f"[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 100:.3f}")
+        with connect(os.getenv("TRAIN_SERV")) as websocket:
+            for epoch in range(int(params["epochs"])):
                 running_loss = 0.0
+                for i, data in enumerate(dataloaders["train_data"], 0):
+                    inputs, labels = data
+        
+                    websocket.send(pickle.dumps(inputs))
+                    res = websocket.recv()
+                    loss = criterion(pickle.loads(res), labels)
+                    loss.backward()
+                    running_loss += loss.item()
+
+                    if i % 1000 == 999:
+                        loss_res = {
+                            "epoch": epoch + 1,
+                            "iter": i + 1,
+                            "loss": round(running_loss / 100, 4)
+                        }
+                        running_loss = 0.0
+                        yield loss_res
+
+            websocket.send("done")
+            res = websocket.recv()
+
+            if res == "200":
+                emit("train-done")
+            else:
+                raise Exception("Ошибка при сохранении модели")
+    except Exception as err:
+        app_log.error(err)
+        if os.getenv("MODE") == "dev":
+            traceback.print_tb(err.__traceback__)
 
 def use():
     try:
         net = Net()
-        data_handler = data.Data()
+        data_handler = data_module.Data()
         classes = list(data_handler.translate.keys())
         net.load_state_dict(torch.load(app.config["MODEL_FILE"]))
         dataloaders = data_handler.transform_data(app.config["DATA_DIR"], ["for_check"])
@@ -58,3 +86,5 @@ def use():
         return data_handler.translate[classes[predicted[0]]]
     except Exception as err:
         app_log.error(err)
+        if os.getenv("MODE") == "dev":
+            traceback.print_tb(err.__traceback__)

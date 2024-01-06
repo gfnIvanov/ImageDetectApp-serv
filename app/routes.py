@@ -1,9 +1,11 @@
 import os
 import shutil
-from app import app, model, socketio
+import json
 import logging
-from flask import request, make_response
-from flask_socketio import send
+import traceback
+from websockets.sync.client import connect
+from app import app, model, socketio
+from flask_socketio import emit
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 
@@ -37,22 +39,32 @@ def index(_):
         return response
     except Exception as err:
         app_log.error(err)
-        return { "status": 500 }
+        if os.getenv("MODE") == "dev":
+            traceback.print_tb(err.__traceback__)
+        return {"status": 500}
     
-@app.route("/train-model", methods=["POST"])
-def train_model():
+@socketio.on("train-model")
+def train_model(params):
     try:
-        params = request.data["params"]
-        return make_response("OK", 200)
+        websocket = connect(os.getenv("TRAIN_SERV"))
+        websocket.send(json.dumps(params))
+        res = websocket.recv()
+        websocket.close()
+        if res == "200":
+            for result in model.train(params):
+                emit("train-res", {"status": 200, "result": result})
+        else:
+            emit("train-res", {"status": 500})
+            raise Exception("Ошибка при передаче параметров")
     except Exception as err:
         app_log.error(err)
-        return make_response(err, 500)
+        return {"status": 500}
     
 @socketio.on("use-model")
 def use_model(data):
     try:
         file = data["file"]
-        filename = secure_filename(data["filename"])
+        filename = secure_filename(data["filename"]) 
         classname = data["class"]
         
         if os.path.exists(app.config["UPLOAD_DIR"]):
@@ -75,4 +87,6 @@ def use_model(data):
         return response
     except Exception as err:
         app_log.error(err)
-        return { "status": 500 }
+        if os.getenv("MODE") == "dev":
+            traceback.print_tb(err.__traceback__)
+        return {"status": 500}
