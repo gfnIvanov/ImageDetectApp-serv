@@ -1,13 +1,15 @@
 import os
-import yaml
 import torch
 import shutil
 import logging
+import traceback
 from torchvision import datasets
 import torchvision.transforms as transforms
 from app import app
-from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 app_log = logging.getLogger(__name__)
 
@@ -39,9 +41,8 @@ class Data:
 
     test_data_dir = os.path.join(app.config["DATA_DIR"], "test_data")
 
-    with open(app.config["TRAIN_PARAM"]) as f:
-        params = yaml.safe_load(f)
-        log_data["params"] = params
+    def __init__(self, params):
+        self.params = params
 
     def prepare_files(self):
         try:
@@ -63,17 +64,19 @@ class Data:
                 equalTestFolder = os.path.join(self.test_data_dir, folder)
                 if os.path.isdir(currentFolder):
                     filesList = os.listdir(currentFolder)
-                    part = round(self.train_data[folder] * self.params["test-size"])
+                    part = round(self.train_data[folder] * float(self.params["test-size"]))
                     self.test_data[self.translate[folder]] = part
                     for i in range(1, part):
                         shutil.copy(os.path.join(currentFolder, filesList[i]), os.path.join(equalTestFolder, filesList[i]))
         except Exception as err:
             app_log.error(err)
+            if os.getenv("MODE") == "dev":
+                traceback.print_tb(err.__traceback__)
 
     def transform_data(self, data_dir, source):
         try:
             data_transforms = transforms.Compose([
-                transforms.Resize((self.params["img-shape"], self.params["img-shape"])),
+                transforms.Resize((int(self.params["img-shape"]), int(self.params["img-shape"]))),
                 transforms.ToTensor(),
                 transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])
             ])
@@ -85,7 +88,7 @@ class Data:
 
             dataloaders = {
                 x: torch.utils.data.DataLoader(image_datasets[x], 
-                                               batch_size=self.params["batch-size"],
+                                               batch_size=int(self.params["batch-size"]),
                                                shuffle=True, 
                                                pin_memory=False,
                                                num_workers=4)
@@ -95,6 +98,8 @@ class Data:
             return dataloaders
         except Exception as err:
             app_log.error(err)
+            if os.getenv("MODE") == "dev":
+                traceback.print_tb(err.__traceback__)
     
     def process(self):
         self.prepare_files()

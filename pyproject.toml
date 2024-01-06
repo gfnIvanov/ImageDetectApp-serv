@@ -16,6 +16,7 @@ pyyaml = "^6.0.1"
 torchvision = "^0.16.1"
 werkzeug = "^3.0.1"
 flask-socketio = "^5.3.6"
+websockets = "^12.0"
 
 
 [build-system]
