@@ -6,10 +6,10 @@ import traceback
 from torchvision import datasets
 import torchvision.transforms as transforms
 from app import app
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 
-load_dotenv()
+envs = dotenv_values(".env.public")
 
 app_log = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class Data:
                         shutil.copy(os.path.join(currentFolder, filesList[i]), os.path.join(equalTestFolder, filesList[i]))
         except Exception as err:
             app_log.error(err)
-            if os.getenv("MODE") == "dev":
+            if envs["MODE"] == "dev":
                 traceback.print_tb(err.__traceback__)
 
     def transform_data(self, data_dir, source):
@@ -98,7 +98,7 @@ class Data:
             return dataloaders
         except Exception as err:
             app_log.error(err)
-            if os.getenv("MODE") == "dev":
+            if envs["MODE"] == "dev":
                 traceback.print_tb(err.__traceback__)
     
     def process(self):

@@ -1,4 +1,4 @@
-include .env
+include .env.public
 
 .PHONY: start
 

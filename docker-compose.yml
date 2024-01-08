@@ -1,14 +1,23 @@
 version: '3.7'
 services:
+  train:
+    build: ../train
+    ports: 
+      - 5202:5202
+    restart: always
+    volumes:
+      - ../train/logs:/trainapp/logs
+
   server:
+    depends_on: 
+      - train
     build: .
     ports: 
       - 5101:5101
     restart: always
-    environment:
-      - FLASK_ENV=production
     volumes:
       - ./params:/flaskapp/params
+      - ./logs:/flaskapp/logs
 
   front:
     depends_on: 

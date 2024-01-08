@@ -6,11 +6,11 @@ import traceback
 from websockets.sync.client import connect
 from app import app, model, socketio
 from flask_socketio import emit
-from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
+from dotenv import dotenv_values
 
 
-load_dotenv()
+envs = dotenv_values(".env.public")
 
 app_log = logging.getLogger(__name__)
 
@@ -21,9 +21,9 @@ def index(_):
         train_params = ""
         status = 404
 
-        if os.path.exists(app.config["MODEL_FILE"]):
+        if os.path.exists(app.config["MODEL_FILE_EXM"]):
             status = 200
-            model_name = os.path.basename(app.config["MODEL_FILE"])
+            model_name = os.path.basename(app.config["MODEL_FILE_EXM"])
             with open(app.config["MODEL_PARAM"], "r") as file:
                 param_lines = file.readlines()
                 model_date = param_lines[0]
@@ -39,14 +39,14 @@ def index(_):
         return response
     except Exception as err:
         app_log.error(err)
-        if os.getenv("MODE") == "dev":
+        if envs["MODE"] == "dev":
             traceback.print_tb(err.__traceback__)
         return {"status": 500}
     
 @socketio.on("train-model")
 def train_model(params):
     try:
-        websocket = connect(os.getenv("TRAIN_SERV"))
+        websocket = connect(envs["TRAIN_SERV"])
         websocket.send(json.dumps(params))
         res = websocket.recv()
         websocket.close()
@@ -87,6 +87,6 @@ def use_model(data):
         return response
     except Exception as err:
         app_log.error(err)
-        if os.getenv("MODE") == "dev":
+        if envs["MODE"] == "dev":
             traceback.print_tb(err.__traceback__)
         return {"status": 500}

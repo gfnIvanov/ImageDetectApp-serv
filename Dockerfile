@@ -1,7 +1,8 @@
 FROM python:3.10.13-slim
 WORKDIR /flaskapp
 COPY pyproject.toml pyproject.toml
-COPY .flaskenv .flaskenv
+COPY .env.public .env.public
+COPY .env.secret .env.secret
 ADD app /flaskapp/app
 ADD logs /flaskapp/logs
 ADD models /flaskapp/models
@@ -12,4 +13,4 @@ RUN pip install poetry
 RUN poetry install
 RUN mkdir data && mkdir data/for_check
 EXPOSE 5101
-CMD poetry run flask run
+CMD poetry run start
