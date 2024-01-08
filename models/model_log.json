@@ -68,6 +68,214 @@
                 "Accuracy for class: паук  is 97.1 %",
                 "Accuracy for class: белка is 96.5 %"
             ]
+        },
+        {
+            "date": "08/01/2024 00:24:06",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "1",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 99.5 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.3 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 00:42:42",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "3",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 99.5 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.3 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 01:14:32",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "10",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 99.5 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.3 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 01:38:40",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "3",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 99.5 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.3 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 02:25:45",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "3",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 100.0 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 03:16:10",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "3",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 7.6 %",
+                "Accuracy for class: бабочка is 0.0 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 88.4 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 03:40:37",
+            "params": {
+                "test-size": "0.3",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "5",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 84.1 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 8.2 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 7.2 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 12:13:56",
+            "params": {
+                "test-size": "0.2",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "10",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 83.4 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 7.4 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 7.2 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ]
+        },
+        {
+            "date": "08/01/2024 23:31:23",
+            "params": {
+                "test-size": "0.2",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "1",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 0.0 %",
+                "Accuracy for class: бабочка is 0.0 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 100.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ],
+            "duration": "15151.755537986755 min"
         }
     ]
 }

@@ -25,8 +25,8 @@ eggs/
 logs/*
 temp/*
 data/*
-logs/*
 models/*
+.env.secret
 
 !.gitkeep
 !models/model_log.json
