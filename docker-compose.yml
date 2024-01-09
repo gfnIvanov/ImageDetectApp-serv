@@ -7,6 +7,7 @@ services:
     restart: always
     volumes:
       - ../train/logs:/trainapp/logs
+      - ../train/model:/trainapp/model
 
   server:
     depends_on: 
@@ -18,6 +19,8 @@ services:
     volumes:
       - ./params:/flaskapp/params
       - ./logs:/flaskapp/logs
+      - ./data:/flaskapp/data
+      - ./models:/flaskapp/models
 
   front:
     depends_on: 
