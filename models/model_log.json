@@ -276,6 +276,30 @@
                 "Accuracy for class: паук  is 0.0 %"
             ],
             "duration": "15151.755537986755 min"
+        },
+        {
+            "date": "09/01/2024 21:15:03",
+            "params": {
+                "test-size": "0.2",
+                "batch-size": "6",
+                "img-shape": "128",
+                "learn-rate": "0.001",
+                "epochs": "1",
+                "optim": "SDG"
+            },
+            "accuracy": [
+                "Accuracy for class: собака is 0.0 %",
+                "Accuracy for class: лошадь is 0.0 %",
+                "Accuracy for class: слон  is 100.0 %",
+                "Accuracy for class: бабочка is 0.0 %",
+                "Accuracy for class: курица is 0.0 %",
+                "Accuracy for class: кошка is 0.0 %",
+                "Accuracy for class: корова is 0.0 %",
+                "Accuracy for class: овца  is 0.0 %",
+                "Accuracy for class: белка is 0.0 %",
+                "Accuracy for class: паук  is 0.0 %"
+            ],
+            "duration": "25.13 min"
         }
     ]
 }
